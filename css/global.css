@@ -56,3 +56,30 @@
 #login .box .login-box .layui-form-item {
   margin-bottom: 35px;
 }
+#Personal i {
+  margin-right: 5px;
+}
+#Personal dl dd {
+  padding-left: 10px;
+}
+#Personal iframe {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+#Personal .userinfo {
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #009688;
+  user-select: none;
+}
+#Personal .add {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #009688;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
