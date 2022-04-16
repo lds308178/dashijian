@@ -1,0 +1,64 @@
+@color1:rgb(0, 207, 221);
+//登录注册
+#login{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background: url(../img/loginbackimg.jpg) no-repeat;
+    background-size: cover;
+    .logo{
+        position: absolute;
+        top: 5%;
+        left: 10%;
+        width: 146px;
+        height: 60px;
+    }
+    .box{
+        position: absolute; 
+        top: 50%;
+        left: 50%;
+        transform:translate(-50%,-50%);
+        width: 500px;
+        height: 420px;
+        background-color: rgba(255, 255, 255, .2);
+        border-radius: 4px;
+        box-shadow: 0 0 7px 1px rgb(212, 209, 209);
+        .tabcard{
+            margin: 40px auto 0;
+            width: 50%;
+            display: flex;
+            li{
+                width: 50%;
+                text-align: center;
+                padding: 6px;
+                font-size: 25px;
+                cursor: pointer;
+            }
+            .select{
+                color: #009688;
+                border-bottom: 1px solid #009688;
+            }
+        }
+        .login-box{
+            position: relative;
+            margin: 40px auto 0;
+            width: 80%;
+            &>div{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 77%;
+            }
+            .hidd{
+                display: none;
+            }
+            .layui-form-item{
+                margin-bottom: 35px;
+            }
+        }
+    }
+}
+//个人中心
+#Personal{
+    
+}

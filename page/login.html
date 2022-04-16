@@ -1,0 +1,173 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-03-01 10:37:54
+ * @LastEditTime: 2022-04-06 17:52:31
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \小兔鲜儿e:\大事件后台管理系统\page\login.html
+-->
+<!DOCTYPE html>
+<html lang="zh-ch">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../icon/favicon.ico" type="image/x-icon">
+    <!--引入layui的样式 -->
+    <link rel="stylesheet" href="../css/layui.css">
+    <!--引入JQuery -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <!--引入layui的js -->
+    <script src="../layui.js"></script>
+    <!--引入字体图标 -->
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <!--引入自己写的样式 -->
+    <link rel="stylesheet" href="../css/global.css">
+    <title>用户登录</title>
+</head>
+
+<body id="login">
+    <!-- 网站logo -->
+    <img src="../img/logo.png" alt="大事件" class="logo">
+    <!-- 登录注册选项卡 -->
+    <div class="box">
+        <ul class="tabcard">
+            <li class="select">登录</li>
+            <li>注册</li>
+        </ul>
+        <div class="login-box">
+            <!-- 登录 -->
+            <div class="login">
+                <form class="layui-form" id="login-but">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" required lay-verify="required|name"
+                                placeholder="输入用户名..." autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" name="password" required lay-verify="required|pwd"
+                                placeholder="输入密码..." autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">登录</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- 注册 -->
+            <div class="register hidd">
+                <form class="layui-form" id="register">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户名</label>
+                        <div class="layui-input-block">
+                            <input type="text" required lay-verify="required|name" placeholder="输入用户名..."
+                                id="register-username" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" required lay-verify="required|pwd" placeholder="输入密码..."
+                                id="register-userpwd" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">确认密码</label>
+                        <div class="layui-input-block">
+                            <input type="password" required lay-verify="required|pwd|confirm" placeholder="确认密码..."
+                                id="confirm-userpwd" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="formDemo">注册</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </form>
+        </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        //选项卡
+        $('.tabcard li').on('click', function () {
+            $(this).addClass('select').siblings().removeClass('select');
+            let index = $(this).index();
+            $('.login-box>div').eq(index).fadeIn(250).siblings().fadeOut(250);
+        });
+        //表单验证
+        var form = layui.form;
+        form.verify({
+            name: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '用户名不能有特殊字符';
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+            },
+            pwd: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ],
+            confirm: function (value) {
+                if (value !== $('#register-userpwd').val()) {
+                    $('#confirm-userpwd').val('');
+                    $('#register-userpwd').val('');
+                    return '用户名密码不一致，请重新确认';
+                }
+            }
+        });
+        // 注册功能
+        $('#register').submit(function (e) {
+            e.preventDefault();
+            let username = $('#register-username').val();
+            let userpwd = $('#register-userpwd').val();
+            $.ajax({
+                type: 'POST',
+                url: 'http://www.liulongbin.top:3007/api/reguser',
+                data: {
+                    username: username, password: userpwd
+                },
+                success: function (res) {
+                    if (res.status == 0) {
+                        alert('注册成功！试试登录吧');
+                        location.reload();
+                    } else {
+                        layer.msg('用户名已被占用');
+                    }
+                }
+            });
+        });
+        //登录
+        $('#login-but').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'http://www.liulongbin.top:3007/api/login',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (res) {
+                    if (res.status == 0) {
+                        localStorage.setItem('token', res.token);
+                        location.href = '/page/Personal.html';
+                    } else {
+                        layer.msg('用户名或密码错误，请重试！');
+                        $('input[name=password]').val('');
+                    }
+                }
+            });
+        });
+    });
+</script>
