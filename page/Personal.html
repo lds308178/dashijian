@@ -1,31 +1,141 @@
 <!--
  * @Author: your name
  * @Date: 2022-03-31 09:41:52
+<<<<<<< HEAD
  * @LastEditTime: 2022-04-16 22:37:02
+=======
+ * @LastEditTime: 2022-04-16 22:06:47
+>>>>>>> index
  * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AEd
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  * @FilePath: \小兔鲜儿e:\大事件后台管理系统\page\Personal.html
 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../icon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../icon/index.ico" type="image/x-icon">
     <!--引入layui的样式 -->
     <link rel="stylesheet" href="../css/layui.css">
     <!--引入JQuery -->
     <script src="../js/jquery-3.4.1.min.js"></script>
+    <!-- 引入简写的url地址和请求头 -->
+    <script src="../js/baseAPI.js"></script>
     <!--引入layui的js -->
     <script src="../layui.js"></script>
-    <!--引入字体图标 -->
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
     <!--引入自己写的样式 -->
     <link rel="stylesheet" href="../css/global.css">
-    <title></title>
+    <title>后台首页</title>
 </head>
+
 <body id="Personal">
-    这是个人中心
+    <!-- 导航栏 -->
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo layui-hide-xs layui-bg-black"><img src="../img/logo.png" alt="系统logo"
+                    style="transform: scale(.9)"></div>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                    <a href="javascript:;">
+                        <img src="../img/loginbackimg.jpg" class="layui-nav-img">
+                        <span class="add"></span>
+                        个人中心
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">我的资料</a></dd>
+                        <dd><a href="javascript:;">更换头像</a></dd>
+                        <dd><a href="javascript:;">重置密码</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                    <a href="javascript:;" id="exit">
+                        <i class="layui-icon layui-icon-logout"></i>退出
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域 -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test" lay-shrink="all">
+                    <li class="userinfo">
+                        <img src="../img/loginbackimg.jpg" class="layui-nav-img">
+                        <span class="add"></span>
+                        <span id="welcome"></span>
+                    </li>
+                    <li class="layui-nav-item layui-this"><a href="./index.html" target="fm"><i
+                                class="layui-icon layui-icon-home"></i>首页</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;"><i class="layui-icon layui-icon-list"></i>文章管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章类别</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章列表</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>发表文章</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="layui-icon layui-icon-username"></i>个人中心</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>基本资料</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>更换头像</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>重置密码</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 内容主体区域 -->
+        <div class="layui-body">
+            <iframe src="./index.html" frameborder="0" name="fm">
+
+            </iframe>
+        </div>
+        <!-- 底部区域 -->
+        <div class="layui-footer">
+            大事件后台管理系统©
+        </div>
+    </div>
 </body>
+
 </html>
+<script>
+    $(function () {
+        $.ajax({
+            method: 'GET',
+            url: '/my/userinfo',
+            success: function (res) {
+                if (res.status === 0) {
+                    user(res.data);
+                } else {
+                    layer.msg('获取用户信息失败');
+                }
+            },
+        })
+    });
+    //渲染用户信息
+    function user(val) {
+        let name = val.nickname || val.username;
+        $('#welcome').text(name);
+        if (val.user_pic === null) {
+            $('.layui-nav-img').hide();
+            $('.add').text(val.username.slice(0, 1))
+        } else {
+            $('.add').hide();
+            $('.layui-nav-img').attr('src', val.user_pic);
+        }
+    };
+    //退出
+    $('#exit').click(function () {
+        layer.confirm('确定要退出吗?', { icon: 3, title: '靓仔提示！' }, function (index) {
+            localStorage.removeItem('token');
+            location.href = './login.html';
+            layer.close(index);
+        });
+    })
+
+</script>
