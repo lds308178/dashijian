@@ -83,3 +83,73 @@
   line-height: 30px;
   color: white;
 }
+#basic {
+  background-color: #f2f3f5;
+  padding: 15px;
+}
+#basic .layui-input-block {
+  width: 300px;
+}
+#reset {
+  background-color: #f2f3f5;
+  padding: 15px;
+}
+#reset .layui-input-block {
+  width: 300px;
+}
+#replace {
+  background-color: #f2f3f5;
+  padding: 15px;
+  /* 设置卡片主体区域的宽度 */
+  /* 设置按钮行的样式 */
+  /* 设置裁剪区域的样式 */
+  /* 设置第一个预览区域的样式 */
+  /* 设置第二个预览区域的样式 */
+  /* 设置预览区域下方文本的样式 */
+  /* 设置图片行的样式 */
+  /* 设置 preview-box 区域的的样式 */
+  /* 设置 img-preview 区域的样式 */
+}
+#replace .layui-card-body {
+  width: 500px;
+}
+#replace .row2 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+#replace .cropper-box {
+  width: 350px;
+  height: 350px;
+  background-color: cyan;
+  overflow: hidden;
+}
+#replace .w100 {
+  width: 100px;
+  height: 100px;
+  background-color: gray;
+}
+#replace .w50 {
+  width: 50px;
+  height: 50px;
+  background-color: gray;
+  margin-top: 50px;
+}
+#replace .size {
+  font-size: 12px;
+  color: gray;
+  text-align: center;
+}
+#replace .row1 {
+  display: flex;
+}
+#replace .preview-box {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+#replace .img-preview {
+  overflow: hidden;
+  border-radius: 50%;
+}

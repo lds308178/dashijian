@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2022-03-31 09:41:52
 <<<<<<< HEAD
- * @LastEditTime: 2022-04-16 22:37:02
+ * @LastEditTime: 2022-04-18 20:12:34
 =======
  * @LastEditTime: 2022-04-16 22:06:47
 >>>>>>> index
@@ -81,9 +81,11 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="layui-icon layui-icon-username"></i>个人中心</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>基本资料</a></dd>
-                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>更换头像</a></dd>
-                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>重置密码</a></dd>
+                            <dd><a href="./basic.html" target="fm"><i class="layui-icon layui-icon-app"></i>基本资料</a>
+                            </dd>
+                            <dd><a href="./replace.html" target="fm"><i class="layui-icon layui-icon-app"></i>更换头像</a></dd>
+                            <dd><a href="./reset.html" target="fm"><i class="layui-icon layui-icon-app"></i>重置密码</a>
+                            </dd>
                         </dl>
                     </li>
                 </ul>
@@ -91,7 +93,7 @@
         </div>
         <!-- 内容主体区域 -->
         <div class="layui-body">
-            <iframe src="./index.html" frameborder="0" name="fm">
+            <iframe src="./replace.html" frameborder="0" name="fm">
 
             </iframe>
         </div>
@@ -104,7 +106,7 @@
 
 </html>
 <script>
-    $(function () {
+    function getuser() {
         $.ajax({
             method: 'GET',
             url: '/my/userinfo',
@@ -116,14 +118,15 @@
                 }
             },
         })
-    });
+    }
+    getuser();
     //渲染用户信息
     function user(val) {
         let name = val.nickname || val.username;
         $('#welcome').text(name);
         if (val.user_pic === null) {
             $('.layui-nav-img').hide();
-            $('.add').text(val.username.slice(0, 1))
+            $('.add').text(name.slice(0, 1))
         } else {
             $('.add').hide();
             $('.layui-nav-img').attr('src', val.user_pic);
@@ -136,6 +139,5 @@
             location.href = './login.html';
             layer.close(index);
         });
-    })
-
+    });
 </script>

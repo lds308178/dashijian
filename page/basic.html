@@ -1,0 +1,113 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-17 10:06:16
+ * @LastEditTime: 2022-04-17 15:51:25
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \小兔鲜儿e:\大事件后台管理系统\page\basic.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入layui的样式 -->
+    <link rel="stylesheet" href="../css/layui.css">
+    <!--引入JQuery -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <!-- 引入简写的url地址和请求头 -->
+    <script src="../js/baseAPI.js"></script>
+    <!--引入layui的js -->
+    <script src="../layui.js"></script>
+    <!--引入自己写的样式 -->
+    <link rel="stylesheet" href="../css/global.css">
+    <title></title>
+</head>
+
+<body id="basic">
+    <div class="layui-card">
+        <div class="layui-card-header">修改用户信息</div>
+        <div class="layui-card-body">
+            <form class="layui-form" lay-filter="formTest">
+                <input type="hidden" name="id">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">登录名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" required lay-verify="required" autocomplete="off"
+                            class="layui-input" readonly>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户昵称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nickname" required lay-verify="required|nickname" placeholder="请输入昵称"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="email" name="email" required lay-verify="required|email" placeholder="请输入邮箱"
+                            autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">提交修改</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    let form = layui.form;
+    form.verify({
+        nickname: function (val) {
+            if (val.length > 6) {
+                return '昵称字数不能大于6'
+            }
+        }
+    });
+    ////获取并显示信息
+    function getuserinfo() {
+        $.ajax({
+            method: 'GET',
+            url: '/my/userinfo',
+            success: function (res) {
+                if (res.status === 0) {
+                    form.val("formTest", res.data);
+                } else {
+                    layer.msg('获取用户信息失败');
+                }
+            }
+        });
+    };
+    getuserinfo();
+    //提交信息
+    $('form').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/my/userinfo',
+            data: form.val("formTest"),
+            success: function (res) {
+                if (res.status !== 0) {
+                    layer.msg('提交用户信息失败');
+                }
+                layer.msg('提交用户信息成功');
+                window.parent.getuser();
+            }
+        });
+    });
+    //重置
+    $('button[type=reset]').click(function (e) {
+        e.preventDefault();
+        getuserinfo();
+    });
+</script>
