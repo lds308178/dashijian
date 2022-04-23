@@ -2,7 +2,7 @@
  * @Author: your name
  * @Date: 2022-03-31 09:41:52
 <<<<<<< HEAD
- * @LastEditTime: 2022-04-18 20:12:34
+ * @LastEditTime: 2022-04-23 11:10:17
 =======
  * @LastEditTime: 2022-04-16 22:06:47
 >>>>>>> index
@@ -40,14 +40,14 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item layui-hide layui-show-md-inline-block">
                     <a href="javascript:;">
-                        <img src="../img/loginbackimg.jpg" class="layui-nav-img">
+                        <img src="" class="layui-nav-img">
                         <span class="add"></span>
                         个人中心
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">我的资料</a></dd>
-                        <dd><a href="javascript:;">更换头像</a></dd>
-                        <dd><a href="javascript:;">重置密码</a></dd>
+                        <dd><a href="./basic.html" target="fm">我的资料</a></dd>
+                        <dd><a href="./replace.html" target="fm">更换头像</a></dd>
+                        <dd><a href="./reset.html" target="fm">重置密码</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
@@ -63,7 +63,7 @@
                 <!-- 左侧导航区域 -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test" lay-shrink="all">
                     <li class="userinfo">
-                        <img src="../img/loginbackimg.jpg" class="layui-nav-img">
+                        <img src="" class="layui-nav-img">
                         <span class="add"></span>
                         <span id="welcome"></span>
                     </li>
@@ -73,8 +73,8 @@
                     <li class="layui-nav-item">
                         <a class="" href="javascript:;"><i class="layui-icon layui-icon-list"></i>文章管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章类别</a></dd>
-                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章列表</a></dd>
+                            <dd><a href="../page/articleClass.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章类别</a></dd>
+                            <dd><a href="../page/textList.html" target="fm"><i class="layui-icon layui-icon-app"></i>文章列表</a></dd>
                             <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>发表文章</a></dd>
                         </dl>
                     </li>
@@ -83,7 +83,8 @@
                         <dl class="layui-nav-child">
                             <dd><a href="./basic.html" target="fm"><i class="layui-icon layui-icon-app"></i>基本资料</a>
                             </dd>
-                            <dd><a href="./replace.html" target="fm"><i class="layui-icon layui-icon-app"></i>更换头像</a></dd>
+                            <dd><a href="./replace.html" target="fm"><i class="layui-icon layui-icon-app"></i>更换头像</a>
+                            </dd>
                             <dd><a href="./reset.html" target="fm"><i class="layui-icon layui-icon-app"></i>重置密码</a>
                             </dd>
                         </dl>
@@ -93,7 +94,7 @@
         </div>
         <!-- 内容主体区域 -->
         <div class="layui-body">
-            <iframe src="./replace.html" frameborder="0" name="fm">
+            <iframe src="./textList.html" frameborder="0" name="fm">
 
             </iframe>
         </div>

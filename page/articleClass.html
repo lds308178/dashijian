@@ -1,0 +1,224 @@
+<!--
+ * @Author: your name
+ * @Date: 2022-04-20 20:48:15
+ * @LastEditTime: 2022-04-23 13:46:55
+ * @LastEditors: Please set LastEditors
+ * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @FilePath: \小兔鲜儿e:\大事件后台管理系统\page\articleClass.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--引入layui的样式 -->
+    <link rel="stylesheet" href="../css/layui.css">
+    <!--引入JQuery -->
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <!-- 引入简写的url地址和请求头 -->
+    <script src="../js/baseAPI.js"></script>
+    <!--引入layui的js -->
+    <script src="../layui.js"></script>
+    <!--引入自己写的样式 -->
+    <link rel="stylesheet" href="../css/global.css">
+    <title></title>
+</head>
+
+<body id="articleClass">
+    <div class="layui-card">
+        <div class="layui-card-header">
+            <span> 文章类别</span>
+            <button class="layui-btn layui-btn-normal" id="add-but">添加类别</button>
+        </div>
+        <div class="layui-card-body">
+            <table class="layui-table">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col width="200">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>分类名称</th>
+                        <th>分类别名</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 弹出添加分类 -->
+    <div class="pop-up">
+        <form class="layui-form" id="add-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入分类名称"
+                        autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类别名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="alias" required lay-verify="required" placeholder="请输入分类别名"
+                        autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">确认添加</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- 弹出修改 -->
+    <div class="pop-updata">
+        <form class="layui-form updata" lay-filter="formTest">
+            <input type="hidden" name="Id">
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入分类名称"
+                        autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类别名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="alias" required lay-verify="required" placeholder="请输入分类别名"
+                        autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn confirm" lay-submit lay-filter="formDemo">确认修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+<script src="../js/template-web.js"></script>
+<script type="text/html" id="list">
+    {{each data}}
+    <tr>
+        <td>{{$value.name}}</td>
+        <td>{{$value.alias}}</td>
+        <td><button class="layui-btn layui-btn-normal layui-btn-xs updata" id={{$value.Id}}>修改</button><button class="layui-btn layui-btn-danger layui-btn-xs det" id={{$value.Id}}>删除</button></td>
+    </tr>
+    {{/each}}
+</script>
+<script>
+    //获取分类列表
+    const get = () => {
+        $.ajax({
+            method: 'GET',
+            url: '/my/article/cates',
+            success: function (res) {
+                if (res.status !== 0) {
+                    layer.msg('获取失败！');
+                } else {
+                    let html = template('list', res);
+                    $('tbody').html(html);
+                }
+            }
+        });
+    };
+    get();
+    $('#add-but').click(function () {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '添加文章分类',
+                content: $('.pop-up')
+            })
+        });
+    });
+    //添加文章
+    $('#add-form').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/my/article/addcates',
+            data: $(this).serialize(),
+            success: function (res) {
+                if (res.status !== 0) {
+                    layer.msg('添加失败！')
+                } else {
+                    layer.close(layer.index);
+                    get();
+                    layer.msg('添加成功！')
+                }
+            }
+        })
+    });
+    //点击修改文章
+    $('tbody').on('click', '.updata', function () {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '修改文章分类',
+                content: $('.pop-updata')
+            })
+        });
+        let id = $(this).attr('id');
+        let form = layui.form;
+        $.ajax({
+            method: 'GET',
+            url: '/my/article/cates/' + id,
+            success: function (res) {
+                if (res.status !== 0) {
+                    layer.msg('获取失败！');
+                } else {
+                    form.val('formTest', res.data)
+                }
+            }
+        });
+    });
+    //确认修改
+    $('.updata').submit(function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '/my/article/updatecate',
+            data: $(this).serialize(),
+            success: function (res) {
+                if (res.status !== 0) {
+                    layer.msg('修改失败！');
+                }
+                layer.msg('修改成功！');
+                get();
+            }
+        });
+        layer.close(layer.index);
+    });
+    //点击删除
+    $('tbody').on('click', '.det', function () {
+        let id = $(this).attr('id');
+        layer.confirm('确定删除吗?', { icon: 3, title: '提示' }, function (index) {
+            $.ajax({
+                method: 'GET',
+                url: '/my/article/deletecate/' + id,
+                success: function (res) {
+                    if (res.status !== 0) {
+                        layer.msg('删除失败！');
+                    } else {
+                        layer.msg('删除成功！');
+                        get();
+                    }
+                }
+            })
+            layer.close(index);
+        });
+    });
+</script>
