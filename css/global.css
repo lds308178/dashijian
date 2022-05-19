@@ -173,3 +173,52 @@
   background-color: #f2f3f5;
   padding: 15px;
 }
+#textList .layui-form {
+  display: flex;
+}
+#textList .layui-form .layui-form-item {
+  width: 250px;
+  margin-right: 20px;
+}
+#textList .layui-form .layui-form-item .layui-input-block {
+  margin-left: 0;
+}
+#release {
+  background-color: #f2f3f5;
+  padding: 15px;
+  /* 设置裁剪区域的样式 */
+  /* 设置第一个预览区域的样式 */
+  /* 设置预览区域下方文本的样式 */
+  /* 设置图片行的样式 */
+  /* 设置 preview-box 区域的的样式 */
+  /* 设置 img-preview 区域的样式 */
+}
+#release #Upload {
+  margin-top: 88px;
+}
+#release .cropper-box {
+  width: 350px;
+  height: 350px;
+  background-color: cyan;
+  overflow: hidden;
+}
+#release .w200 {
+  width: 200px;
+  height: 200px;
+  background-color: gray;
+}
+#release .size {
+  font-size: 12px;
+  color: gray;
+  text-align: center;
+}
+#release .row1 {
+  display: flex;
+}
+#release .preview-box {
+  margin-left: 50px;
+  align-items: center;
+}
+#release .img-preview {
+  overflow: hidden;
+}
